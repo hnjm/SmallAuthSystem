@@ -52,7 +52,7 @@ namespace SmallAuthSystem.models
             this.FirstName = pFirstNameIn;
             this.LastName = pLastNameIn;
             this.Email = pEmailIn;
-            this.Password = HashPassword(pPasswordIn);
+            this.Password = HashPassword(pPasswordIn); 
         }
 
     }
