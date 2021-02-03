@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using BCrypt;
 
 namespace SmallAuthSystem.models
@@ -5,13 +6,12 @@ namespace SmallAuthSystem.models
     public class Account
     {
 
-        public string accountId { get; set; }
-        
+        [Key]
+        public string EmailAddress { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
-        public string Email { get; set; }
 
         public string PasswordHash { get; set; }
 
@@ -21,18 +21,24 @@ namespace SmallAuthSystem.models
             return BCrypt.Net.BCrypt.HashPassword(pPasswordIn, salt);
         }
 
-        private string GenerateId()
+        public bool CheckPassword(string pPasswordIn)
         {
-            return System.Guid.NewGuid().ToString("N");
+            if(BCrypt.Net.BCrypt.Verify(pPasswordIn, this.PasswordHash))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public Account(string pFirstNameIn,
-        string pLastNameIn, string pEmailIn, string pPasswordIn)
+        public Account(string pEmailIn, string pFirstNameIn,
+        string pLastNameIn, string pPasswordIn)
         {
-            this.accountId = GenerateId();
+            this.EmailAddress = pEmailIn;
             this.FirstName = pFirstNameIn;
             this.LastName = pLastNameIn;
-            this.Email = pEmailIn;
             this.PasswordHash = HashPassword(pPasswordIn); 
         }
 
