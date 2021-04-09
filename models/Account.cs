@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using BCrypt;
 
 namespace SmallAuthSystem.models
 {
